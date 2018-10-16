@@ -41,6 +41,8 @@ module.exports = function(RED) {
         // This will be executed on every input message
         this.on('input', function (msg) {
         
+        this.debug("Received Topic:" + msg.topic);
+        
         if(msg.topic == "date-time")
         {
             this.dateTime = msg.payload;
