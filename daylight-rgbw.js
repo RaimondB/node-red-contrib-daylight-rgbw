@@ -44,9 +44,10 @@ module.exports = function(RED) {
         
         var rgb = ct.colorTemperature2rgb(1850);
  
-        var red = rgb.red;
-        var green = rgb.green;
-        var blue = rgb.blue;
+        // Convert values to percentage
+        var red = rgb.red / 255.0;
+        var green = rgb.green / 255.0;
+        var blue = rgb.blue / 255.0;
 
         var msgRed = { topic: this.topic, payload: red};
         var msgGreen = { topic: this.topic, payload: green};
