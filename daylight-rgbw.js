@@ -44,7 +44,7 @@ module.exports = function(RED) {
         if(msg.topic == "date-time")
         {
             this.dateTime = msg.payload;
-            this.trace("Received dt:" + this.dateTime);
+            this.debug("Received dt:" + this.dateTime);
             return;
         }
 
