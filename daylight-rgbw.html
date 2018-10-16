@@ -1,0 +1,65 @@
+<!--
+
+Daylight RGBW Color control Node for Node-RED
+-------------------------------------------------------------------------------------------------------------------
+Copyright (c) 2018 Raimond Brookman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<script type="text/x-red" data-template-name="daylight-rgbw">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="daylight-rgbw">
+   <p>TODO</p>
+   <h3>Inputs</h3>
+   <dl class="message-properties">
+       <dt>payload
+           <span class="property-type">string | number | boolean</span>
+       </dt>
+       <dd> TODO </dd>
+   </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd>TODO</dd>
+    </dl>
+
+<h3>Details</h3>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('daylight-rgbw',{
+        category: 'function',      
+        color:"#999999",
+        defaults: {
+            name: {value:""},
+            topic: {value:"daylight-rgbw", required:true},
+        },
+        inputs:1,               
+        outputs:4,              
+        icon: "light.png",     // saved in  icons/myicon.png
+        label: function() {     // sets the default label contents
+            return this.name||this.topic||"Dayight RGBW";
+        },
+        paletteLabel: "daylight RGBW",
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+

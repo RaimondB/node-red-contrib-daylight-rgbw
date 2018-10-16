@@ -1,0 +1,25 @@
+{
+    "name"         : "node-red-contrib-nefit-easy2",
+    "version"      : "1.2.0",
+    "description"  : "Nefit Easy node for Node RED (updated fork from node-red-contrib-nefit-easy )",
+    "author"       : "Raimond Brookman <raimondb@gmail.com>",
+    "license"      : "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RaimondB/node-red-contrib-nefit-easy.git"
+    },
+    "bugs": {
+        "url": "https://github.com/RaimondB/node-red-contrib-nefit-easy/issues"
+    },
+    "homepage": "https://github.com/RaimondB/node-red-contrib-nefit-easy#readme",
+    "dependencies": {
+        "bluebird": "^3.1.1",
+        "nefit-easy-commands": "^3.0.2"
+    },
+    "keywords": [ "node-red","nefit","easy" ],
+    "node-red"     : {
+        "nodes": {
+            "nefit-easy": "nefit-easy.js"
+        }
+    }
+}
