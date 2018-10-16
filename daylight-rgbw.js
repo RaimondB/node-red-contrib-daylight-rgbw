@@ -41,6 +41,13 @@ module.exports = function(RED) {
         // This will be executed on every input message
         this.on('input', function (msg) {
         
+        if(msg.topic == "date-time")
+        {
+            this.dateTime = msg.payload;
+            this.trace("Received dt:" + this.dateTime);
+            return;
+        }
+
         node.uri = null;
         node.value = null;
         var colorTemp = Number(msg.payload);
