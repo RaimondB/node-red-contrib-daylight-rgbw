@@ -41,12 +41,12 @@ module.exports = function(RED) {
         // This will be executed on every input message
         this.on('input', function (msg) {
         
-        this.debug("Received Topic:" + msg.topic);
+        this.log("Received Topic:" + msg.topic);
         
         if(msg.topic == "date-time")
         {
             this.dateTime = msg.payload;
-            this.debug("Received dt:" + this.dateTime);
+            this.log("Received dt:" + this.dateTime);
             return;
         }
 
