@@ -18,7 +18,11 @@ module.exports = function(RED) {
   
     var ct = require('color-temperature');
     var SunCalc = require('suncalc');
-        
+    
+    function ScaleRGBLevelToPercent(rgbLevel) {
+        return rgbLevel * 100.0 / 255.0;
+    }
+    
 // ------------------------------------------------------------------------------------------
     function DaylightRGBWNode(n) {
     //
@@ -39,15 +43,16 @@ module.exports = function(RED) {
         
         node.uri = null;
         node.value = null;
+        var colorTemp = Number(msg.payload);
 
-        this.status({fill:"yellow",shape:"ring",text:"calculating"});
+        this.status({fill:"yellow",shape:"ring",text:"calculating for:" + colorTemp});
         
-        var rgb = ct.colorTemperature2rgb(1850);
+        var rgb = ct.colorTemperature2rgb(colorTemp);
  
         // Convert values to percentage
-        var red = rgb.red / 255.0;
-        var green = rgb.green / 255.0;
-        var blue = rgb.blue / 255.0;
+        var red = ScaleRGBLevelToPercent(rgb.red);
+        var green = ScaleRGBLevelToPercent(rgb.green);
+        var blue = ScaleRGBLevelToPercent(rgb.blue);
 
         var msgRed = { topic: this.topic, payload: red};
         var msgGreen = { topic: this.topic, payload: green};
