@@ -43,16 +43,23 @@ module.exports = function(RED) {
         
         this.log("Received Topic:" + msg.topic);
         
-        if(msg.topic == "date-time")
-        {
-            this.dateTime = msg.payload;
-            this.log("Received dt:" + this.dateTime);
-            return;
-        }
+        this.dateTime = msg.payload;
+        this.log("Received dt:" + this.dateTime);
+
+        var positionResult = SunCalc.getPosition(this.dateTime, 51.8926122, 5.8764425);
+        this.log("Sun position:" + positionResult.altitude);
+
+        var fraction = positionResult.altitude * 2 / Math.PI
+        this.log("Sun position fraction:" + fraction);
+
+        var minTemp = 1000;
+        var maxTemp = 6000;
+
+        var colorTemp = minTemp + (fraction * (maxTemp-minTemp));
 
         node.uri = null;
         node.value = null;
-        var colorTemp = Number(msg.payload);
+        //var colorTemp = Number(msg.payload);
 
         this.status({fill:"yellow",shape:"ring",text:"calculating for:" + colorTemp});
         
