@@ -56,6 +56,7 @@ module.exports = function(RED) {
         var maxTemp = 6000;
 
         var colorTemp = minTemp + (fraction * (maxTemp-minTemp));
+        this.log("Color temp:" + colorTemp);
 
         node.uri = null;
         node.value = null;
