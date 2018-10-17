@@ -49,11 +49,11 @@ module.exports = function(RED) {
         var positionResult = SunCalc.getPosition(this.dateTime, 51.8926122, 5.8764425);
         this.log("Sun position:" + positionResult.altitude);
 
-        var fraction = positionResult.altitude * 2 / Math.PI
+        var fraction = positionResult.altitude * 2.0 / Math.PI;
         this.log("Sun position fraction:" + fraction);
 
-        var minTemp = 1000;
-        var maxTemp = 6000;
+        var minTemp = 1000.0;
+        var maxTemp = 6000.0;
 
         var colorTemp = minTemp + (fraction * (maxTemp-minTemp));
         this.log("Color temp:" + colorTemp);
