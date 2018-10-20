@@ -38,6 +38,8 @@ module.exports = function(RED) {
         this.maxTemp = n.maxColorTemp;
         this.whiteLevel = n.whiteLevel;
 
+        this.log("Read config:" + n);
+
         var node = this;
         var msg = {};
   
