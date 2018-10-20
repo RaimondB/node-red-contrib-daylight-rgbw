@@ -34,9 +34,9 @@ module.exports = function(RED) {
         
         this.topic = n.topic;
         this.command = n.command;
-        this.minTemp = n.minColorTemp;
-        this.maxTemp = n.maxColorTemp;
-        this.whiteLevel = n.whiteLevel;
+        this.minTemp = Number(n.minColorTemp);
+        this.maxTemp = Number(n.maxColorTemp);
+        this.whiteLevel = Number(n.whiteLevel);
 
         this.log("Read config:" + n);
 
