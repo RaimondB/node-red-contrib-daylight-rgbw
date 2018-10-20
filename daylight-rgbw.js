@@ -82,17 +82,18 @@ module.exports = function(RED) {
             var red = ScaleRGBLevelToPercent(rgb.red);
             var green = ScaleRGBLevelToPercent(rgb.green);
             var blue = ScaleRGBLevelToPercent(rgb.blue);
+            var white = Number(this.whiteLevel) * 1.0;
 
             var msgRed = { topic: this.topic, payload: red};
             var msgGreen = { topic: this.topic, payload: green};
             var msgBlue = { topic: this.topic, payload: blue};
-            var msgWhite = { topic: this.topic, payload: this.whiteLevel};
+            var msgWhite = { topic: this.topic, payload: white};
             
             this.send([msgRed, msgGreen, msgBlue, msgWhite]);
 
             this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
                 ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
-                ",W:" + this.whiteLevel.toFixed(1)});            
+                ",W:" + white.toFixed(1)});            
         });
 
         this.on("close", function() {
