@@ -30,7 +30,8 @@
     "devDependencies": {
         "mocha": "^5.2.0",
         "node-red": "^0.19.4",
-        "node-red-node-test-helper": "^0.1.8"
+        "node-red-node-test-helper": "^0.1.8",
+        "should": "^13.2.3"
     },
     "scripts": {
         "test": "mocha \"test/**/*_spec.js\""

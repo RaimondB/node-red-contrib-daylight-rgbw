@@ -34,6 +34,9 @@ module.exports = function(RED) {
         
         this.topic = n.topic;
         this.command = n.command;
+        this.minTemp = n.minColorTemp;
+        this.maxTemp = n.maxColorTemp;
+        this.whiteLevel = n.whiteLevel;
 
         var node = this;
         var msg = {};
@@ -41,44 +44,55 @@ module.exports = function(RED) {
         // This will be executed on every input message
         this.on('input', function (msg) {
         
-        this.log("Received Topic:" + msg.topic);
-        
-        this.dateTime = msg.payload;
-        this.log("Received dt:" + this.dateTime);
+            this.log("Received Topic:" + msg.topic);
+            var colorTemp = null;
 
-        var positionResult = SunCalc.getPosition(this.dateTime, 51.8926122, 5.8764425);
-        this.log("Sun position:" + positionResult.altitude);
+            if(msg.topic == "date-time")
+            {
+                this.dateTime = msg.payload;
+                this.log("Received dt:" + this.dateTime);
 
-        var fraction = positionResult.altitude * 2.0 / Math.PI;
-        this.log("Sun position fraction:" + fraction);
+                var positionResult = SunCalc.getPosition(this.dateTime, 51.8926122, 5.8764425);
+                this.log("Sun position:" + positionResult.altitude);
 
-        var minTemp = 1000.0;
-        var maxTemp = 6000.0;
+                var fraction = positionResult.altitude * 2.0 / Math.PI;
+                this.log("Sun position fraction:" + fraction);
 
-        var colorTemp = minTemp + (Math.max(fraction,0) * (maxTemp-minTemp));
-        this.log("Color temp:" + colorTemp);
+                colorTemp = this.minTemp + (Math.max(fraction,0) * (this.maxTemp-this.minTemp));
+            } else if(msg.topic == "color-temp")
+            {
+                colorTemp = Number(msg.payload);
+            }
+            else
+            {
+                this.status({fill:"red",shape:"dot",text:"unknown topic:" + msg.topic});
+                return;
+            }
 
-        node.uri = null;
-        node.value = null;
-        //var colorTemp = Number(msg.payload);
+            this.log("Color-temp:" + colorTemp);
 
-        this.status({fill:"yellow",shape:"ring",text:"calculating for:" + colorTemp});
-        
-        var rgb = ct.colorTemperature2rgb(colorTemp);
- 
-        // Convert values to percentage
-        var red = ScaleRGBLevelToPercent(rgb.red);
-        var green = ScaleRGBLevelToPercent(rgb.green);
-        var blue = ScaleRGBLevelToPercent(rgb.blue);
+            node.uri = null;
+            node.value = null;
 
-        var msgRed = { topic: this.topic, payload: red};
-        var msgGreen = { topic: this.topic, payload: green};
-        var msgBlue = { topic: this.topic, payload: blue};
-        
-        this.send([msgRed, msgGreen, msgBlue]);
-
-        this.status({fill:"green",shape:"ring",text:"R:" + red + ",G:" + green + ",B:" + blue});
+            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + colorTemp});
             
+            var rgb = ct.colorTemperature2rgb(colorTemp);
+    
+            // Convert values to percentage
+            var red = ScaleRGBLevelToPercent(rgb.red);
+            var green = ScaleRGBLevelToPercent(rgb.green);
+            var blue = ScaleRGBLevelToPercent(rgb.blue);
+
+            var msgRed = { topic: this.topic, payload: red};
+            var msgGreen = { topic: this.topic, payload: green};
+            var msgBlue = { topic: this.topic, payload: blue};
+            var msgWhite = { topic: this.topic, payload: this.whiteLevel};
+            
+            this.send([msgRed, msgGreen, msgBlue, msgWhite]);
+
+            this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
+                ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
+                ",W:" + this.whiteLevel.toFixed(1)});            
         });
 
         this.on("close", function() {

@@ -20,6 +20,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
+    <div class="form-row">
+        <label for="node-input-minColorTemp"><i class="fa fa-tasks"></i> Min. Color Temp.</label>
+        <input type="text" id="node-input-minColorTemp" placeholder="Min. Color Temp.">
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxColorTemp"><i class="fa fa-tasks"></i> Max. Color Temp.</label>
+        <input type="text" id="node-input-maxColorTemp" placeholder="Max. Color Temp.">
+    </div>
+    <div class="form-row">
+        <label for="node-input-whiteLevel"><i class="fa fa-tasks"></i> White Level</label>
+        <input type="text" id="node-input-whiteLevel" placeholder="White Level">
+    </div>
+
 </script>
 
 <script type="text/x-red" data-help-name="daylight-rgbw">
@@ -49,6 +62,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         defaults: {
             name: {value:""},
             topic: {value:"daylight-rgbw", required:true},
+            minColorTemp: {value:1000},
+            maxColorTemp: {value:6000},
+            whiteLevel: {value:50}
         },
         inputs:1,               
         outputs:4,              
