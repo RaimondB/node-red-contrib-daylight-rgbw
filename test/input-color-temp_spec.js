@@ -30,7 +30,8 @@ describe('daylight-rgbw Node', function () {
         { id:"f1", type:"tab", label:"Test flow"},
         { id: "n1", z:"f1", type: "daylight-rgbw",
           minColorTemp : 1000,
-          maxColorTemp : 6000, 
+          maxColorTemp : 6000,
+          whiteLevel : 50, 
           name: "daylight-rgbw",wires:[["n2"],[],[],[]] },
         { id: "n2", z:"f1", type: "helper" }
     ];
