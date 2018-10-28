@@ -62,10 +62,10 @@ module.exports = function(RED) {
                 var fraction = positionResult.altitude * 2.0 / Math.PI;
                 this.log("Sun position fraction:" + fraction);
 
-                this.colorTemp = this.minTemp + (Math.max(fraction,0) * (this.maxTemp-this.minTemp));
+                this.colorTemp = (this.minTemp * 1.0) + (Math.max(fraction,0) * (this.maxTemp-this.minTemp));
             } else if(msg.topic == "color-temp")
             {
-                this.colorTemp = Number(msg.payload);
+                this.colorTemp = Number(msg.payload) * 1.0;
             }
             else if(msg.topic == "item-switch" || msg.event == "StateEvent" )
             {
@@ -83,7 +83,7 @@ module.exports = function(RED) {
             node.uri = null;
             node.value = null;
 
-            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp});
+            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp.toFixed(1)});
 
             if(this.itemState == "ON")
             {
@@ -109,7 +109,7 @@ module.exports = function(RED) {
             }
             else
             {
-                this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + this.colorTemp});
+                this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + this.colorTemp.toFixed(1)});
             }
                         
         });
