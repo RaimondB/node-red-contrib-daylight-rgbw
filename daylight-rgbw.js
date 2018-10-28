@@ -67,7 +67,7 @@ module.exports = function(RED) {
             {
                 this.colorTemp = Number(msg.payload);
             }
-            else if(msg.topic == "StateEvent")
+            else if(msg.topic == "item-switch" || msg.event == "StateEvent" )
             {
                 this.itemState = msg.payload;
                 this.context().set("itemSate", this.itemState);

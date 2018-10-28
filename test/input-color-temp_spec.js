@@ -60,7 +60,7 @@ describe('daylight-rgbw Node', function () {
           }
         });
 
-        n1.receive({ payload: "ON", topic:"StateEvent" });
+        n1.receive({ payload: "ON", topic:"item-switch" });
 
         var currentDateTime = new Date(2018,10,18,0,0,0);
         n1.receive({ payload: currentDateTime, topic:"date-time" });
@@ -110,7 +110,7 @@ describe('daylight-rgbw Node', function () {
       var currentDateTime = new Date(2018,10,18,0,0,0);
       n1.receive({ payload: currentDateTime, topic:"date-time" });
 
-      n1.receive({ payload: "ON", topic:"StateEvent" });
+      n1.receive({ payload: "ON", event:"StateEvent" });
     }
   catch(err)
     {
