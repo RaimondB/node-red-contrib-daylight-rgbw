@@ -62,9 +62,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         defaults: {
             name: {value:""},
             topic: {value:"daylight-rgbw", required:true},
-            minColorTemp: {value:1000, required:true},
-            maxColorTemp: {value:6000, required:true},
-            whiteLevel: {value:50, required:true}
+            minColorTemp: {value:1000, required:true, validate:RED.validators.number() },
+            maxColorTemp: {value:6000, required:true, validate:RED.validators.number()},
+            whiteLevel: {value:50, required:true, validate:RED.validators.number()}
         },
         inputs:1,               
         outputs:4,              

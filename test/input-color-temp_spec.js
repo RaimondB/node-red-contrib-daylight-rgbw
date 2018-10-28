@@ -25,7 +25,54 @@ describe('daylight-rgbw Node', function () {
     });
   });
 
-  it('should convert midnight to RGBW outputs RED 100%', function (done) {
+  it('should send 2 messages to RGBW outputs after switch on - timestamp', function (done) {
+      var flow = [
+          { id:"f1", type:"tab", label:"Test flow"},
+          { id: "n1", z:"f1", type: "daylight-rgbw",
+            minColorTemp : 1000,
+            maxColorTemp : 6000,
+            whiteLevel : 50, 
+            name: "daylight-rgbw",wires:[["n2"],[],[],[]] },
+          { id: "n2", z:"f1", type: "helper" }
+      ];
+      helper.load(sutNode, flow, function () {
+        try
+        {
+            
+        var n2 = helper.getNode("n2");
+        var n1 = helper.getNode("n1");
+
+        var msgNo = 0;
+        n2.on("input", function (msg) {
+          try
+          {
+            msgNo++;
+            msg.should.have.property('payload', 100);
+            
+            if(msgNo==2)
+            {
+              done();
+            }
+          }
+          catch(err)
+          {
+            done(err);
+          }
+        });
+
+        n1.receive({ payload: "ON", topic:"StateEvent" });
+
+        var currentDateTime = new Date(2018,10,18,0,0,0);
+        n1.receive({ payload: currentDateTime, topic:"date-time" });
+    }
+    catch(err)
+      {
+        done(err);
+      }  
+    });
+  });
+
+  it('should send 1 messages to RGBW outputs after timestamp - switch on', function (done) {
     var flow = [
         { id:"f1", type:"tab", label:"Test flow"},
         { id: "n1", z:"f1", type: "daylight-rgbw",
@@ -36,15 +83,23 @@ describe('daylight-rgbw Node', function () {
         { id: "n2", z:"f1", type: "helper" }
     ];
     helper.load(sutNode, flow, function () {
-      
+      try
+      {
+          
       var n2 = helper.getNode("n2");
       var n1 = helper.getNode("n1");
 
+      var msgNo = 0;
       n2.on("input", function (msg) {
         try
         {
+          msgNo++;
           msg.should.have.property('payload', 100);
-          done();
+          
+          if(msgNo==1)
+          {
+            done();
+          }
         }
         catch(err)
         {
@@ -54,6 +109,13 @@ describe('daylight-rgbw Node', function () {
 
       var currentDateTime = new Date(2018,10,18,0,0,0);
       n1.receive({ payload: currentDateTime, topic:"date-time" });
-    });
+
+      n1.receive({ payload: "ON", topic:"StateEvent" });
+    }
+  catch(err)
+    {
+      done(err);
+    }  
   });
+});
 });

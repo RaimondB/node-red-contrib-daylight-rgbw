@@ -38,6 +38,9 @@ module.exports = function(RED) {
         this.maxTemp = Number(n.maxColorTemp);
         this.whiteLevel = Number(n.whiteLevel);
 
+        this.itemState = this.context().get("itemState") || "OFF";
+        this.colorTemp = this.minTemp;
+
         this.log("Read config:" + n);
 
         var node = this;
@@ -47,7 +50,6 @@ module.exports = function(RED) {
         this.on('input', function (msg) {
         
             this.log("Received Topic:" + msg.topic);
-            var colorTemp = null;
 
             if(msg.topic == "date-time")
             {
@@ -60,10 +62,15 @@ module.exports = function(RED) {
                 var fraction = positionResult.altitude * 2.0 / Math.PI;
                 this.log("Sun position fraction:" + fraction);
 
-                colorTemp = this.minTemp + (Math.max(fraction,0) * (this.maxTemp-this.minTemp));
+                this.colorTemp = this.minTemp + (Math.max(fraction,0) * (this.maxTemp-this.minTemp));
             } else if(msg.topic == "color-temp")
             {
-                colorTemp = Number(msg.payload);
+                this.colorTemp = Number(msg.payload);
+            }
+            else if(msg.topic == "StateEvent")
+            {
+                this.itemState = msg.payload;
+                this.context().set("itemSate", this.itemState);
             }
             else
             {
@@ -71,31 +78,40 @@ module.exports = function(RED) {
                 return;
             }
 
-            this.log("Color-temp:" + colorTemp);
+            this.log("Color-temp:" + this.colorTemp);
 
             node.uri = null;
             node.value = null;
 
-            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + colorTemp});
-            
-            var rgb = ct.colorTemperature2rgb(colorTemp);
-    
-            // Convert values to percentage
-            var red = ScaleRGBLevelToPercent(rgb.red);
-            var green = ScaleRGBLevelToPercent(rgb.green);
-            var blue = ScaleRGBLevelToPercent(rgb.blue);
-            var white = Number(this.whiteLevel) * 1.0;
+            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp});
 
-            var msgRed = { topic: this.topic, payload: red};
-            var msgGreen = { topic: this.topic, payload: green};
-            var msgBlue = { topic: this.topic, payload: blue};
-            var msgWhite = { topic: this.topic, payload: white};
-            
-            this.send([msgRed, msgGreen, msgBlue, msgWhite]);
+            if(this.itemState == "ON")
+            {
 
-            this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
+                var rgb = ct.colorTemperature2rgb(this.colorTemp);
+        
+                // Convert values to percentage
+                var red = ScaleRGBLevelToPercent(rgb.red);
+                var green = ScaleRGBLevelToPercent(rgb.green);
+                var blue = ScaleRGBLevelToPercent(rgb.blue);
+                var white = Number(this.whiteLevel) * 1.0;
+
+                var msgRed = { topic: this.topic, payload: red};
+                var msgGreen = { topic: this.topic, payload: green};
+                var msgBlue = { topic: this.topic, payload: blue};
+                var msgWhite = { topic: this.topic, payload: white};
+  
+                this.send([msgRed, msgGreen, msgBlue, msgWhite]);
+                
+                this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
                 ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
-                ",W:" + white.toFixed(1)});            
+                ",W:" + white.toFixed(1)});
+            }
+            else
+            {
+                this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + this.colorTemp});
+            }
+                        
         });
 
         this.on("close", function() {
