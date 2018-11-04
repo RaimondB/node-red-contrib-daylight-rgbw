@@ -38,19 +38,59 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <script type="text/x-red" data-help-name="daylight-rgbw">
    <p>TODO</p>
    <h3>Inputs</h3>
-   <dl class="message-properties">
-       <dt>payload
-           <span class="property-type">string | number | boolean</span>
-       </dt>
-       <dd> TODO </dd>
-   </dl>
+        <li>Topic:date-time
+            <dl class="message-properties">
+                <dt>payload
+                    <span class="property-type">Date</span>
+                </dt>
+                <dd> Date object, for instance as provided by the Inject node.</dd>
+            </dl>
+        </li>
+        <li>Topic:item-switch
+            <dl class="message-properties">
+                <dt>payload
+                    <span class="property-type">string</span>
+                </dt>
+                <dd> ON or OFF, to either send output messages or not</dd>
+            </dl>
+        </li>
+        <li>Topic:color-temp
+            <dl class="message-properties">
+                <dt>payload
+                    <span class="property-type">number</span>
+                </dt>
+                <dd> Number to set a desired color tempurature in Kelvin directly.</dd>
+            </dl>
+        </li>
+        
 
     <h3>Outputs</h3>
-    <dl class="message-properties">
-        <dt>payload <span class="property-type">string</span></dt>
-        <dd>TODO</dd>
-    </dl>
-
+    <ol class="node-ports">
+        <li> Red dim value
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">number</span></dt>
+                <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+        <li> Green dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+        </dl>
+        </li>
+        <li> Blue dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+        <li> White dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+                        
 <h3>Details</h3>
 </script>
 
