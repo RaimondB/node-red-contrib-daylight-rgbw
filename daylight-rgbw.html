@@ -21,6 +21,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
     <div class="form-row">
+        <label for="node-input-latitude"><i class="fa fa-map-marker"></i> Latitude</label>
+        <input type="text" id="node-input-latitude" placeholder="Latitude">
+    </div>
+    <div class="form-row">
+        <label for="node-input-longitude"><i class="fa fa-map-marker"></i> Longitude</label>
+        <input type="text" id="node-input-longitude" placeholder="Longitude">
+    </div>
+    <div class="form-row">
         <label for="node-input-minColorTemp"><i class="fa fa-tasks"></i> Min. Color Temp.</label>
         <input type="text" id="node-input-minColorTemp" placeholder="Min. Color Temp.">
     </div>
@@ -36,27 +44,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 </script>
 
 <script type="text/x-red" data-help-name="daylight-rgbw">
-   <p>TODO</p>
    <h3>Inputs</h3>
-        <li>Topic:date-time
+        Several types of input messages are handled, depending on their topic.
+
+        <li>
             <dl class="message-properties">
-                <dt>payload
+                <dt>payload (topic:date-time)
                     <span class="property-type">Date</span>
                 </dt>
                 <dd> Date object, for instance as provided by the Inject node.</dd>
             </dl>
         </li>
-        <li>Topic:item-switch
+        <li>
             <dl class="message-properties">
-                <dt>payload
+                <dt>payload (topic:item-switch)
                     <span class="property-type">string</span>
                 </dt>
-                <dd> ON or OFF, to either send output messages or not</dd>
+                <dd> ON or OFF, to either enable sending output messages or not</dd>
             </dl>
         </li>
-        <li>Topic:color-temp
+        <li>
             <dl class="message-properties">
-                <dt>payload
+                <dt>payload (topic:color-temp)
                     <span class="property-type">number</span>
                 </dt>
                 <dd> Number to set a desired color tempurature in Kelvin directly.</dd>
@@ -92,6 +101,33 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         </li>
                         
 <h3>Details</h3>
+<p>
+This node offers the possibility to control the color of a RGBW ledstrip according to time of day.
+This is done by calculating the angle of the sun with the horizon and project that on a color temperature scale.
+Therefore it is important to correctly configure your longitude and lattitude.
+</p>
+<p>
+Typically you choose a color tempurature of around 1000K for sunrise/sunset (sun at horizon) and a color temperature around 5500K for the highest point of the sun
+But to tune it for your specific RGBW source you can tune these settings in the configuration.
+The white level is kept constant and can be configured too.
+When the item is switched off, it will still update the RGBW colors, so that when the light source is switched on it will drectly be set to the correct colors.
+</p>
+<p>
+The typical setup is to:
+<p>
+<b> Have an external node to provide the current timestamp.</b> 
+    For instance the Inject Node offers this. 
+    Choose to provide the timestamp by interval to determine how often the colors will be updated.
+</p>
+<p>
+<b> Have your RGB(W) node status attached to the input to provide ON or OFF</b>
+<p>
+    This way you prevent the light source to come on each time when the color are updated.
+    This node is optimized to work directly with OpenHab2 nodes, but will work with any node as long as the topic is set to item-switch.
+</p>
+<p>
+<b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>
+</p>
 </script>
 
 
@@ -102,6 +138,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         defaults: {
             name: {value:""},
             topic: {value:"daylight-rgbw", required:true},
+            latitude: {required:true, validate:RED.validators.number() },
+            longitude: {required:true, validate:RED.validators.number() },
             minColorTemp: {value:1000, required:true, validate:RED.validators.number() },
             maxColorTemp: {value:6000, required:true, validate:RED.validators.number()},
             whiteLevel: {value:50, required:true, validate:RED.validators.number()}

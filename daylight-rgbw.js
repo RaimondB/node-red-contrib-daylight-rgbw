@@ -37,11 +37,11 @@ module.exports = function(RED) {
         this.minTemp = Number(n.minColorTemp);
         this.maxTemp = Number(n.maxColorTemp);
         this.whiteLevel = Number(n.whiteLevel);
+        this.latitude = Number(n.latitude)||0.0;
+        this.longitude = Number(n.longitude)||0.0;
 
         this.itemState = this.context().get("itemState") || "OFF";
         this.colorTemp = this.minTemp;
-
-        this.log("Read config:" + n);
 
         var node = this;
         var msg = {};
@@ -55,8 +55,9 @@ module.exports = function(RED) {
             {
                 this.dateTime = msg.payload;
                 this.log("Received dt:" + this.dateTime);
+                
 
-                var positionResult = SunCalc.getPosition(this.dateTime, 51.8926122, 5.8764425);
+                var positionResult = SunCalc.getPosition(this.dateTime, this.latitude, this.longitude);
                 this.log("Sun position:" + positionResult.altitude);
 
                 var fraction = positionResult.altitude * 2.0 / Math.PI;
