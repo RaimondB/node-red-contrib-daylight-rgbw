@@ -44,7 +44,6 @@ module.exports = function(RED) {
         this.colorTemp = this.minTemp;
 
         var node = this;
-        var msg = {};
   
         // This will be executed on every input message
         this.on('input', function (msg) {
@@ -80,9 +79,6 @@ module.exports = function(RED) {
             }
 
             this.log("Color-temp:" + this.colorTemp);
-
-            node.uri = null;
-            node.value = null;
 
             this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp.toFixed(1)});
 
