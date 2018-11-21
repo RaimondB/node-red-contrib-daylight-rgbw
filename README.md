@@ -19,7 +19,7 @@ When the item is switched off, it will still update the RGBW colors, so that whe
 
 
 The typical setup is show below:
-![alt text](./images/daylight-flow.png "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/RaimondB/node-red-contrib-daylight-rgbw/master/images/daylight-flow.PNG "Example flow")
 <p>
 This examples follows the rules below:
 
