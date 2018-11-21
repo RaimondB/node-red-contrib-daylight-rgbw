@@ -19,7 +19,7 @@ When the item is switched off, it will still update the RGBW colors, so that whe
 
 
 The typical setup is show below:
-![alt text](/images/daylight-flow.png "Logo Title Text 1")
+![alt text](./images/daylight-flow.png "Logo Title Text 1")
 <p>
 This examples follows the rules below:
 
