@@ -72,6 +72,16 @@ module.exports = function(RED) {
                 this.itemState = msg.payload;
                 this.context().set("itemSate", this.itemState);
             }
+            else if(msg.topic == "white-level")
+            {
+                var currentWhiteLevel = this.whiteLevel;
+                var newWhiteLevel = Number(msg.payload) * 1.0;
+
+                if(newWhiteLevel >= 0 || newWhiteLevel <= 100)
+                {
+                    this.whiteLevel = newWhiteLevel;
+                }
+            }
             else
             {
                 this.status({fill:"red",shape:"dot",text:"unknown topic:" + msg.topic});
