@@ -47,6 +47,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    <h3>Inputs</h3>
         Several types of input messages are handled, depending on their topic.
 
+    <ol class="node-ports">
         <li>
             <dl class="message-properties">
                 <dt>payload (topic:date-time)
@@ -71,7 +72,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <dd> Number to set a desired color tempurature in Kelvin directly.</dd>
             </dl>
         </li>
-        
+        <li>
+            <dl class="message-properties">
+                <dt>payload (topic:white-level)
+                    <span class="property-type">number</span>
+                </dt>
+                <dd> Number to set a desired brightness (white level).</dd>
+            </dl>
+        </li>
+    </ol>
 
     <h3>Outputs</h3>
     <ol class="node-ports">
