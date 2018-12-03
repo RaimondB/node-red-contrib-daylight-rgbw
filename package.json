@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-daylight-rgbw",
-    "version": "1.0.1",
+    "version": "1.1.1",
     "description": "Daylight RGBW Color control for Node RED",
     "author": "Raimond Brookman <raimondb@gmail.com>",
     "license": "MIT",
