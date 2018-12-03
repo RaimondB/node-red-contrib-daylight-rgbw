@@ -5,6 +5,7 @@ Lets your RGB(W) controllable lights or ledstrips follow the sun color and a war
 
 <span class="badge-npmversion"><a href="https://www.npmjs.com/package/node-red-contrib-daylight-rgbw" title="View this project on NPM"><img src="https://img.shields.io/npm/v/node-red-contrib-daylight-rgbw.svg" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://npmjs.org/package/node-red-contrib-daylight-rgbw" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/node-red-contrib-daylight-rgbw.svg" alt="NPM downloads" /></a></span>
+[![Build Status](https://travis-ci.com/RaimondB/node-red-contrib-daylight-rgbw.svg?branch=master)](https://travis-ci.com/RaimondB/node-red-contrib-daylight-rgbw)
 
 This node offers the possibility to control the color of a RGBW ledstrip according to time of day.
 This is done by calculating the angle of the sun with the horizon and project that on a color temperature scale.
