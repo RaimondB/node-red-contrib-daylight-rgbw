@@ -35,7 +35,7 @@
         "should": "^13.2.3"
     },
     "peerDependencies": {
-        "node-red": "~0.19.5"
+        "node-red": "~0.18.4"
     },
     "scripts": {
         "test": "mocha \"test/**/*_spec.js\""
