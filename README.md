@@ -36,14 +36,21 @@ Choose to provide the timestamp by interval to determine how often the colors wi
 This way you prevent the light source to come on each time when the colors are updated.
 This node is optimized to work directly with OpenHab2 nodes, but will work with any node as long as the topic is set to _item-switch_.
 
-<b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>
+<b> Choose your output </b> 
+You can output RGBW separate components (port 1,2,3,4) and/or make use of the colorTemp output (port 5) 
 
+<b> Have your RGB(W) dimmer controls for the color channels connected to port 1,2,3,4.</b>
 The current implementation will output percentages. If you need a range 0-255 you need to rescale.
+You do not need to use port 4 if you do not have a White channel.
 
+<b> Have your Kelvin or Mired compatible color control connected to port 5.</b>
+The result will internally be caculated in Kelvin. 
 
 ## Installation
 
+First go to your .node-red directory, then run the command below (or just install from the palette manager)
+
 ```
-$ npm -g i node-red-contrib-daylight-rgbw
+$ npm install node-red-contrib-daylight-rgbw
 ```
 
