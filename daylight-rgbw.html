@@ -29,11 +29,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <input type="text" id="node-input-longitude" placeholder="Longitude">
     </div>
     <div class="form-row">
-        <label for="node-input-minColorTemp"><i class="fa fa-tasks"></i> Min. Color Temp.</label>
+        <label for="node-input-colorTempUnit"><i class="fa fa-tasks"></i>Output Color Temp. Unit</label>
+        <select style="width:26% !important" type="text" id="node-input-colorTempUnit" >
+            <option value="K">Kelvin</option>
+            <option value="M">Mired</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-minColorTemp"><i class="fa fa-tasks"></i> Min. Color Temp.(K)</label>
         <input type="text" id="node-input-minColorTemp" placeholder="Min. Color Temp.">
     </div>
     <div class="form-row">
-        <label for="node-input-maxColorTemp"><i class="fa fa-tasks"></i> Max. Color Temp.</label>
+        <label for="node-input-maxColorTemp"><i class="fa fa-tasks"></i> Max. Color Temp.(K)</label>
         <input type="text" id="node-input-maxColorTemp" placeholder="Max. Color Temp.">
     </div>
     <div class="form-row">
@@ -108,7 +115,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <dd>From 0 to 100 (precentage) brightness</dd>
             </dl>
         </li>
-                        
+        <li> Color Temperature value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>Color temperature in configured unit (Kelvin or Mired)</dd>
+            </dl>
+        </li>
+
+        
 <h3>Details</h3>
 <p>
 This node offers the possibility to control the color of a RGBW ledstrip according to time of day.
@@ -151,15 +165,17 @@ The typical setup is to:
             longitude: {required:true, validate:RED.validators.number() },
             minColorTemp: {value:1000, required:true, validate:RED.validators.number() },
             maxColorTemp: {value:6000, required:true, validate:RED.validators.number()},
-            whiteLevel: {value:50, required:true, validate:RED.validators.number()}
+            whiteLevel: {value:50, required:true, validate:RED.validators.number()},
+            colorTempUnit : {value:"K", required:true}
         },
         inputs:1,               
-        outputs:4,              
+        outputs:5,              
         icon: "light.png",     // saved in  icons/myicon.png
         label: function() {     // sets the default label contents
             return this.name||this.topic||"Dayight RGBW";
         },
         paletteLabel: "daylight RGBW",
+        outputLabels: ["red","green","blue", "white", "colorTemp"],
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
         }

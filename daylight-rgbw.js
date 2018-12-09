@@ -22,6 +22,11 @@ module.exports = function(RED) {
     function ScaleRGBLevelToPercent(rgbLevel) {
         return rgbLevel * 100.0 / 255.0;
     }
+
+    function KelvinToMired(kelvin)
+    {
+        return 1000000 / kelvin;
+    }
     
 // ------------------------------------------------------------------------------------------
     function DaylightRGBWNode(n) {
@@ -42,6 +47,9 @@ module.exports = function(RED) {
 
         this.itemState = this.context().get("itemState") || "OFF";
         this.colorTemp = this.minTemp;
+        this.colorTempUnit = n.colorTempUnit || "K";
+
+        this.log("Configured colorTempUnit:" + this.colorTempUnit );
 
         var node = this;
   
@@ -92,6 +100,8 @@ module.exports = function(RED) {
 
             this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp.toFixed(1)});
 
+            var colorTempOut = (this.colorTempUnit == "K") ? this.colorTemp : KelvinToMired(this.colorTemp);
+
             if(this.itemState == "ON")
             {
 
@@ -107,16 +117,17 @@ module.exports = function(RED) {
                 var msgGreen = { topic: this.topic, payload: green};
                 var msgBlue = { topic: this.topic, payload: blue};
                 var msgWhite = { topic: this.topic, payload: white};
-  
-                this.send([msgRed, msgGreen, msgBlue, msgWhite]);
+                var msgColorTemp = { topic: this.topic, payload: colorTempOut };
+
+                this.send([msgRed, msgGreen, msgBlue, msgWhite, msgColorTemp]);
                 
                 this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
                 ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
-                ",W:" + white.toFixed(1)});
+                ",W:" + white.toFixed(1) + ",colorTemp:" + colorTempOut.toFixed(1)});
             }
             else
             {
-                this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + this.colorTemp.toFixed(1)});
+                this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + colorTempOut.toFixed(1)});
             }
                         
         });
