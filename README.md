@@ -23,8 +23,11 @@ When the item is switched off, it will still update the RGBW colors, so that whe
 
 The typical setup is show below:
 ![alt text](https://raw.githubusercontent.com/RaimondB/node-red-contrib-daylight-rgbw/master/images/daylight-flow.PNG "Example flow")
+
+Also see this link for an [importable version of the example](https://raw.githubusercontent.com/RaimondB/node-red-contrib-daylight-rgbw/master/examples/daylight-flow-basic.json).
+
 <p>
-This examples follows the rules below:
+This example follows the rules below:
 
 <b>Have an external node to provide the current timestamp.</b>
 

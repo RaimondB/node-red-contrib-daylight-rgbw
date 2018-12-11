@@ -1,0 +1,224 @@
+[
+    {
+        "id": "57a6c6eb.2655d8",
+        "type": "daylight-rgbw",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "daylight-rgbw",
+        "latitude": "52.8081774",
+        "longitude": "5.0936659",
+        "minColorTemp": "1000",
+        "maxColorTemp": 6000,
+        "whiteLevel": "35",
+        "colorTempUnit": "K",
+        "x": 510,
+        "y": 240,
+        "wires": [
+            [
+                "c533f223.0bb5b"
+            ],
+            [
+                "85a17b9d.7bb0d8"
+            ],
+            [
+                "b351e3ed.884a4"
+            ],
+            [
+                "15158fe0.5807e"
+            ],
+            [
+                "51f2e803.11ba18"
+            ]
+        ]
+    },
+    {
+        "id": "c533f223.0bb5b",
+        "type": "debug",
+        "z": "2a0c393.2a9e4c6",
+        "name": "Red Percentage",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 740,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "85a17b9d.7bb0d8",
+        "type": "debug",
+        "z": "2a0c393.2a9e4c6",
+        "name": "Green Percentage",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 750,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b351e3ed.884a4",
+        "type": "debug",
+        "z": "2a0c393.2a9e4c6",
+        "name": "Blue Percentage",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 740,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "15158fe0.5807e",
+        "type": "debug",
+        "z": "2a0c393.2a9e4c6",
+        "name": "White Percentage",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "40dd23b2.f050cc",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "date-time",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    },
+    {
+        "id": "9b3fc2c4.ba16b",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "color-temp",
+        "payload": "1000",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    },
+    {
+        "id": "86016fd9.deb6f",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "item-switch",
+        "payload": "ON",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 320,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    },
+    {
+        "id": "8acb6052.c0acb",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "item-switch",
+        "payload": "OFF",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    },
+    {
+        "id": "9211651d.33f258",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "white-level",
+        "payload": "50",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    },
+    {
+        "id": "51f2e803.11ba18",
+        "type": "debug",
+        "z": "2a0c393.2a9e4c6",
+        "name": "Color Temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 750,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "86953522.871588",
+        "type": "inject",
+        "z": "2a0c393.2a9e4c6",
+        "name": "",
+        "topic": "color-temp",
+        "payload": "2500",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "57a6c6eb.2655d8"
+            ]
+        ]
+    }
+]
