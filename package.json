@@ -24,7 +24,8 @@
   ],
   "node-red": {
     "nodes": {
-      "daylight-rgbw": "daylight-rgbw.js"
+      "daylight-rgbw": "daylight-rgbw.js",
+      "animate-rgbw": "animate-rgbw.js"
     }
   },
   "devDependencies": {

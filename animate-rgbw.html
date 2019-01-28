@@ -1,8 +1,8 @@
 <!--
 
-Daylight RGBW Color control Node for Node-RED
+Animate RGBW Color control Node for Node-RED
 -------------------------------------------------------------------------------------------------------------------
-Copyright (c) 2018 Raimond Brookman
+Copyright (c) 2019 Raimond Brookman
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
-<script type="text/x-red" data-template-name="daylight-rgbw">
+<script type="text/x-red" data-template-name="animate-rgbw">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -21,36 +21,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
     <div class="form-row">
-        <label for="node-input-latitude"><i class="fa fa-map-marker"></i> Latitude</label>
-        <input type="text" id="node-input-latitude" placeholder="Latitude">
-    </div>
-    <div class="form-row">
-        <label for="node-input-longitude"><i class="fa fa-map-marker"></i> Longitude</label>
-        <input type="text" id="node-input-longitude" placeholder="Longitude">
-    </div>
-    <div class="form-row">
-        <label for="node-input-colorTempUnit"><i class="fa fa-tasks"></i>Output Color Temp. Unit</label>
-        <select style="width:26% !important" type="text" id="node-input-colorTempUnit" >
-            <option value="K">Kelvin</option>
-            <option value="M">Mired</option>
+        <label for="node-input-animationType"><i class="fa fa-tasks"></i>Animation Type</label>
+        <select style="width:26% !important" type="text" id="node-input-animationType" >
+            <option value="C">Custom</option>
+            <option value="D">Disco</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-minColorTemp"><i class="fa fa-tasks"></i> Min. Color Temp.(K)</label>
-        <input type="text" id="node-input-minColorTemp" placeholder="Min. Color Temp.">
-    </div>
-    <div class="form-row">
-        <label for="node-input-maxColorTemp"><i class="fa fa-tasks"></i> Max. Color Temp.(K)</label>
-        <input type="text" id="node-input-maxColorTemp" placeholder="Max. Color Temp.">
-    </div>
-    <div class="form-row">
-        <label for="node-input-whiteLevel"><i class="fa fa-tasks"></i> White Level</label>
+        <label for="node-input-whiteLevel"><i class="fa fa-tasks"></i>White Level</label>
         <input type="text" id="node-input-whiteLevel" placeholder="White Level">
     </div>
 
 </script>
 
-<script type="text/x-red" data-help-name="daylight-rgbw">
+<script type="text/x-red" data-help-name="animate-rgbw">
    <h3>Inputs</h3>
         Several types of input messages are handled, depending on their topic.
 
@@ -61,22 +45,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     <span class="property-type">Date</span>
                 </dt>
                 <dd> Date object, for instance as provided by the Inject node.</dd>
-            </dl>
-        </li>
-        <li>
-            <dl class="message-properties">
-                <dt>payload (topic:item-switch)
-                    <span class="property-type">string</span>
-                </dt>
-                <dd> ON or OFF, to either enable sending output messages or not</dd>
-            </dl>
-        </li>
-        <li>
-            <dl class="message-properties">
-                <dt>payload (topic:color-temp)
-                    <span class="property-type">number</span>
-                </dt>
-                <dd> Number to set a desired color tempurature in Kelvin directly.</dd>
             </dl>
         </li>
         <li>
@@ -125,28 +93,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         
 <h3>Details</h3>
 <p>
-This node offers the possibility to control the color of a RGBW ledstrip according to time of day.
-This is done by calculating the angle of the sun with the horizon and project that on a color temperature scale.
-Therefore it is important to correctly configure your longitude and lattitude.
-</p>
-<p>
-Typically you choose a color tempurature of around 1000K for sunrise/sunset (sun at horizon) and a color temperature around 5500K for the highest point of the sun
-But to tune it for your specific RGBW source you can tune these settings in the configuration.
-The white level is kept constant and can be configured too.
-When the item is switched off, it will still update the RGBW colors, so that when the light source is switched on it will drectly be set to the correct colors.
+This node offers the possibility to animate your ledstrip with different color and animation schemes to control the color of a RGBW lightsource.
 </p>
 <p>
 The typical setup is to:
 <p>
-<b> Have an external node to provide the current timestamp.</b> 
-    For instance the Inject Node offers this. 
-    Choose to provide the timestamp by interval to determine how often the colors will be updated.
-</p>
-<p>
-<b> Have your RGB(W) node status attached to the input to provide ON or OFF</b>
-<p>
-    This way you prevent the light source to come on each time when the color are updated.
-    This node is optimized to work directly with OpenHab2 nodes, but will work with any node as long as the topic is set to item-switch.
+<b> Have an external node to trigger the start of the animation.</b> 
 </p>
 <p>
 <b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>
@@ -155,26 +107,22 @@ The typical setup is to:
 
 
 <script type="text/javascript">
-    RED.nodes.registerType('daylight-rgbw',{
+    RED.nodes.registerType('animate-rgbw',{
         category: 'RGBW',      
         color:"#999999",
         defaults: {
             name: {value:""},
-            topic: {value:"daylight-rgbw", required:true},
-            latitude: {required:true, validate:RED.validators.number() },
-            longitude: {required:true, validate:RED.validators.number() },
-            minColorTemp: {value:1000, required:true, validate:RED.validators.number() },
-            maxColorTemp: {value:6000, required:true, validate:RED.validators.number()},
+            topic: {value:"animate-rgbw", required:true},
             whiteLevel: {value:50, required:true, validate:RED.validators.number()},
-            colorTempUnit : {value:"K", required:true}
+            animationType : {value:"C", required:true}
         },
         inputs:1,               
         outputs:5,              
         icon: "light.png",     // saved in  icons/myicon.png
         label: function() {     // sets the default label contents
-            return this.name||this.topic||"Daylight RGBW";
+            return this.name||this.topic||"Animate RGBW";
         },
-        paletteLabel: "Daylight RGBW",
+        paletteLabel: "Animate RGBW",
         outputLabels: ["red","green","blue", "white", "colorTemp"],
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
