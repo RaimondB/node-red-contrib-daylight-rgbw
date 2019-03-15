@@ -30,7 +30,7 @@
   "devDependencies": {
     "deep-extend": "^0.6.0",
     "mocha": "^6.0.2",
-    "node-red": "^0.19.5",
+    "node-red": "^0.20.0",
     "node-red-node-test-helper": "^0.1.8",
     "should": "^13.2.3",
     "snyk": "^1.113.0"
