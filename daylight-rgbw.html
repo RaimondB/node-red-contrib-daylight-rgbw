@@ -156,7 +156,7 @@ The typical setup is to:
 
 <script type="text/javascript">
     RED.nodes.registerType('daylight-rgbw',{
-        category: 'function',      
+        category: 'RGBW',      
         color:"#999999",
         defaults: {
             name: {value:""},
@@ -172,9 +172,9 @@ The typical setup is to:
         outputs:5,              
         icon: "light.png",     // saved in  icons/myicon.png
         label: function() {     // sets the default label contents
-            return this.name||this.topic||"Dayight RGBW";
+            return this.name||this.topic||"Daylight RGBW";
         },
-        paletteLabel: "daylight RGBW",
+        paletteLabel: "Daylight RGBW",
         outputLabels: ["red","green","blue", "white", "colorTemp"],
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";

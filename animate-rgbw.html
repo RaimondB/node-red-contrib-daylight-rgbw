@@ -1,0 +1,126 @@
+<!--
+
+Animate RGBW Color control Node for Node-RED
+-------------------------------------------------------------------------------------------------------------------
+Copyright (c) 2019 Raimond Brookman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<script type="text/x-red" data-template-name="animate-rgbw">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-animationType"><i class="fa fa-tasks"></i>Animation Type</label>
+        <select style="width:26% !important" type="text" id="node-input-animationType" >
+<!--            <option value="C">Custom</option>-->
+            <option value="D">Disco</option>
+            <option value="R">Rainbow</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-whiteLevel"><i class="fa fa-tasks"></i>White Level</label>
+        <input type="text" id="node-input-whiteLevel" placeholder="White Level">
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="animate-rgbw">
+   <h3>Inputs</h3>
+        Several types of input messages are handled, depending on their topic.
+
+    <ol class="node-ports">
+        <li>
+            <dl class="message-properties">
+                <dt>payload (topic:date-time)
+                    <span class="property-type">Date</span>
+                </dt>
+                <dd> Date object, for instance as provided by the Inject node.</dd>
+            </dl>
+        </li>
+        <li>
+            <dl class="message-properties">
+                <dt>payload (topic:white-level)
+                    <span class="property-type">number</span>
+                </dt>
+                <dd> Number to set a desired brightness (white level).</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li> Red dim value
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">number</span></dt>
+                <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+        <li> Green dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+        </dl>
+        </li>
+        <li> Blue dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+        <li> White dim value
+            <dl class="message-properties">
+            <dt>payload <span class="property-type">number</span></dt>
+            <dd>From 0 to 100 (precentage) brightness</dd>
+            </dl>
+        </li>
+        
+<h3>Details</h3>
+<p>
+This node offers the possibility to animate your ledstrip with different color and animation schemes to control the color of a RGBW lightsource.
+</p>
+<p>
+The typical setup is to:
+<p>
+<b> Have an external node to trigger the start of the animation.</b> 
+</p>
+<p>
+<b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>
+</p>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('animate-rgbw',{
+        category: 'RGBW',      
+        color:"#999999",
+        defaults: {
+            name: {value:""},
+            topic: {value:"animate-rgbw", required:true},
+            whiteLevel: {value:50, required:true, validate:RED.validators.number()},
+            animationType : {value:"C", required:true}
+        },
+        inputs:1,               
+        outputs:4,              
+        icon: "light.png",     // saved in  icons/myicon.png
+        label: function() {     // sets the default label contents
+            return this.name||this.topic||"Animate RGBW";
+        },
+        paletteLabel: "Animate RGBW",
+        outputLabels: ["red","green","blue", "white"],
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
