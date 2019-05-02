@@ -170,12 +170,6 @@ module.exports = function(RED) {
                     }
                 }            
             }
-
-//            this.status({fill:"yellow",shape:"ring",text:"calculating for:" + this.colorTemp.toFixed(1)});
-                
-//            this.status({fill:"green",shape:"ring",text:"R:" + red.toFixed(1) + 
-//            ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
-//            ",W:" + white.toFixed(1) + ",colorTemp:" + colorTempOut.toFixed(1)});                        
         });
 
         this.on("close", function() {

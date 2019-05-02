@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/RaimondB/node-red-contrib-daylight-rgbw#readme",
   "dependencies": {
-    "bluebird": "^3.5.3",
+    "bluebird": "^3.5.4",
     "color-temperature": "^0.2.7",
     "suncalc": "^1.8.0"
   },

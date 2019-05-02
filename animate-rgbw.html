@@ -84,13 +84,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <dd>From 0 to 100 (precentage) brightness</dd>
             </dl>
         </li>
-        <li> Color Temperature value
-            <dl class="message-properties">
-            <dt>payload <span class="property-type">number</span></dt>
-            <dd>Color temperature in configured unit (Kelvin or Mired)</dd>
-            </dl>
-        </li>
-
         
 <h3>Details</h3>
 <p>
@@ -118,13 +111,13 @@ The typical setup is to:
             animationType : {value:"C", required:true}
         },
         inputs:1,               
-        outputs:5,              
+        outputs:4,              
         icon: "light.png",     // saved in  icons/myicon.png
         label: function() {     // sets the default label contents
             return this.name||this.topic||"Animate RGBW";
         },
         paletteLabel: "Animate RGBW",
-        outputLabels: ["red","green","blue", "white", "colorTemp"],
+        outputLabels: ["red","green","blue", "white"],
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
         }
