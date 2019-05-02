@@ -1,5 +1,5 @@
 # node-red-contrib-daylight-rgbw
-Lets your RGB(W) controllable lights or ledstrips follow the sun color and a warm color at night
+Lets your RGB(W) controllable lights or ledstrips follow the sun color and a warm color at night. Also offers color animations (Disco & Rainbow)
 
 ## Daylight RGBW Control Node-RED Node
 
@@ -48,6 +48,9 @@ You do not need to use port 4 if you do not have a White channel.
 
 <b> Have your Kelvin or Mired compatible color control connected to port 5.</b>
 The result will internally be caculated in Kelvin. 
+
+## Animation RGBW Control Node
+A second node within this package offers RGB animations. Currently 2 modes exist: disco (random colors) and rainbow (walking all possible colors)
 
 ## Installation
 
