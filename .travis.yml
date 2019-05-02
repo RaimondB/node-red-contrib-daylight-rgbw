@@ -7,3 +7,6 @@ cache: npm
 
 before_install:
   - npm install node-red@~0.18.4
+  
+notifications:
+  slack: brookman:tFljPfoIDuqfPhYqYsCVRYXf

@@ -23,58 +23,93 @@ module.exports = function(RED) {
         return rgbLevel * 100.0 / 255.0;
     }
 
-    function outputValues(node, colorSource)
+    function outputValues(node, colorSource, previousColorInfo)
     {
         if(!node.stopAnimating)
         {
-            var rgbw = colorSource.colors();
+            var colorInfo = colorSource(previousColorInfo);
 
-            var msgRed = { topic: node.topic, payload: ScaleRGBLevelToPercent(rgbw.red)};
-            var msgGreen = { topic: node.topic, payload: ScaleRGBLevelToPercent(rgbw.green)};
-            var msgBlue = { topic: node.topic, payload: ScaleRGBLevelToPercent(rgbw.blue)};
-            var msgWhite = { topic: node.topic, payload: ScaleRGBLevelToPercent(rgbw.white)};
+            var msgRed = { topic: node.topic, payload: ScaleRGBLevelToPercent(colorInfo.red)};
+            var msgGreen = { topic: node.topic, payload: ScaleRGBLevelToPercent(colorInfo.green)};
+            var msgBlue = { topic: node.topic, payload: ScaleRGBLevelToPercent(colorInfo.blue)};
+            var msgWhite = { topic: node.topic, payload: ScaleRGBLevelToPercent(colorInfo.white)};
     
             node.send([msgRed, msgGreen, msgBlue, msgWhite]);
     
-            setTimeout(() => outputValues(node, colorSource.nextSource()), colorSource.nextTimeout());
+            node.lastTimeout = setTimeout(() => outputValues(node, colorInfo.nextSource, colorInfo), colorInfo.waitToNext);
         }
         else
         {
+            //Switch off all colors
             var msgZero = { topic: node.topic, payload: 0}
             node.send([msgZero, msgZero, msgZero, msgZero]);
         }
     }
     
-    var discoColorSource =
+    function discoColorSource(previousColorInfo)
     {
-        colors : function ()
-        {
-            var randomHue = Math.floor(Math.random() * 360);
-            var saturation = 100;
-            var brightness = 50;
-            
-            var transformer = (x) => 1.0-((1.0-x)*(1.0-x));
+        var hue = Math.floor(Math.random() * 360);
+        var saturation = 100;
+        var luminance = 50;
+        
+        var transformer = (x) => 1.0-((1.0-x)*(1.0-x));
 
-            var whiteLevel = Math.floor( transformer(Math.random()) * 80);
+        var whiteLevel = Math.floor( transformer(Math.random()) * 80);
 
-            var result = convert.hsl.rgb(randomHue, saturation, brightness);
+        var result = convert.hsl.rgb(hue, saturation, luminance);
 
-            var rgbw = {};
-            rgbw.red = result[0];
-            rgbw.green = result[1];
-            rgbw.blue = result[2];
-            rgbw.white = whiteLevel;
-            return rgbw;
-        },
-
-        nextSource : () =>
-        {
-            return discoColorSource;
-        },
-
-        nextTimeout : () => 1000
+        var colorInfo = {};
+        colorInfo.red = result[0];
+        colorInfo.green = result[1];
+        colorInfo.blue = result[2];
+        colorInfo.white = whiteLevel;
+        colorInfo.nextSource = discoColorSource;
+        colorInfo.waitToNext = 1000;
+        colorInfo.state = {hue:hue, sat:saturation, lum:luminance};
+        return colorInfo;
     }
-      
+
+    function rainbowColorSource(previousColorInfo)
+    {
+        if(!previousColorInfo)
+        {
+            previousColorInfo = {};
+        }
+        if(!previousColorInfo.state)
+        {
+            previousColorInfo.state = {hue:0, sat:100, lum:50};
+        }
+        previousColorInfo.state.hue = (previousColorInfo.state.hue + 1) % 360;
+
+        var hue = previousColorInfo.state.hue;
+        var saturation = previousColorInfo.state.sat;
+        var luminance = previousColorInfo.state.lum;
+        var whiteLevel = 0;
+
+        var result = convert.hsl.rgb(hue, saturation, luminance);
+
+        var colorInfo = {};
+        colorInfo.red = result[0];
+        colorInfo.green = result[1];
+        colorInfo.blue = result[2];
+        colorInfo.white = whiteLevel;
+        colorInfo.nextSource = rainbowColorSource;
+        colorInfo.waitToNext = 100;
+        colorInfo.state = previousColorInfo.state;
+        return colorInfo;
+    }
+
+    
+    function createColorSource(selection)
+    {
+        switch (selection)
+        {
+            case "R" : return rainbowColorSource;
+            case "D" : return discoColorSource;
+            case "C" : return null;
+        }
+    }
+
 // ------------------------------------------------------------------------------------------
     function AnimateRGBWNode(n) {
     //
@@ -83,14 +118,26 @@ module.exports = function(RED) {
         
         // Create a RED node
         RED.nodes.createNode(this,n);
-        
+
+        var node = this;
+
         this.topic = n.topic;
         this.command = n.command;
         this.whiteLevel = Number(n.whiteLevel);
-        this.stopAnimating = false;
 
-        var node = this;
-  
+        this.stopAnimating = true;
+        this.log("Received Animationtype:" + n.animationType);
+        this.colorSource = createColorSource(n.animationType);
+
+        if(!this.colorSource)
+        {
+            this.status({fill:"red",shape:"dot",text:"Invalid animationtype"});
+        }
+        else
+        {
+            this.status({fill:"green",shape:"dot",text:"Animationtype:" + this.colorSource.name});
+        }
+
         // This will be executed on every input message
         this.on('input', function (msg) {
         
@@ -117,7 +164,10 @@ module.exports = function(RED) {
                 else
                 {
                     this.stopAnimating = false;
-                    setTimeout(() => outputValues(node, discoColorSource), 100);
+                    if(this.colorSource)
+                    {
+                        setTimeout(() => outputValues(node, this.colorSource, null), 100);
+                    }
                 }            
             }
 
@@ -129,6 +179,15 @@ module.exports = function(RED) {
         });
 
         this.on("close", function() {
+            this.stopAnimating = true;
+            if(this.lastTimeout)
+            {
+                this.log("Clear previous timer");
+                //Make sure to cancel running animations on redeploy
+                clearTimeout(this.lastTimeout);
+            }
+            var msgZero = { topic: node.topic, payload: 0}
+            node.send([msgZero, msgZero, msgZero, msgZero]);
         });
     }
     RED.nodes.registerType("animate-rgbw", AnimateRGBWNode);

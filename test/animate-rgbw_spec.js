@@ -25,10 +25,10 @@ describe('animate-rgbw Node', function () {
     });
   });
 
-  it('should output messages to RGBW outputs after receive message', function (done) {
+  it('should output messages to RGBW outputs after receive message for rainbow', function (done) {
     var flow = [
         { id:"f1", type:"tab", label:"Test flow"},
-        { id: "n1", z:"f1", type: "animate-rgbw",
+        { id: "n1", z:"f1", type: "animate-rgbw", animationType: "R",
           whiteLevel : 50, 
           name: "animate-rgbw",wires:[["n2"],[],[],[]] },
         { id: "n2", z:"f1", type: "helper" }
@@ -68,44 +68,4 @@ describe('animate-rgbw Node', function () {
       }  
     });
   });
-
-  // it('should send 1 messages to colorTemp output in Mired when Mired configured', function (done) {
-  //   var flow = [
-  //       { id:"f1", type:"tab", label:"Test flow"},
-  //       { id: "n1", z:"f1", type: "animate-rgbw",
-  //         minColorTemp : 1000,
-  //         maxColorTemp : 6000,
-  //         whiteLevel : 50,
-  //         colorTempUnit : "M",
-  //         name: "animate-rgbw",wires:[[],[],[],[],["n2"]] },
-  //       { id: "n2", z:"f1", type: "helper" }
-  //   ];
-  //   helper.load(sutNode, flow, function () {
-  //     try
-  //     {
-          
-  //     var n2 = helper.getNode("n2");
-  //     var n1 = helper.getNode("n1");
-
-  //     n2.on("input", function (msg) {
-  //       try
-  //       {
-  //         msg.should.have.property('payload', 1000000.0/1000);          
-  //         done();
-  //       }
-  //       catch(err)
-  //       {
-  //         done(err);
-  //       }
-  //     });
-
-  //     n1.receive({ payload: 1000, topic:"color-temp" });
-  //     n1.receive({ payload: "ON", event:"StateEvent" });
-  //     }
-  //     catch(err)
-  //     {
-  //       done(err);
-  //     }  
-  //   });
-  //  });
 });
