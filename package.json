@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-daylight-rgbw",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Daylight RGBW Color control for Node RED",
   "author": "Raimond Brookman <raimondb@gmail.com>",
   "license": "MIT",
@@ -15,6 +15,7 @@
   "dependencies": {
     "bluebird": "^3.5.4",
     "color-temperature": "^0.2.7",
+    "color-convert": "^2.0.0",
     "suncalc": "^1.8.0"
   },
   "keywords": [
