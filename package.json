@@ -34,10 +34,9 @@
     "mocha": "^6.1.4",
     "node-red": "^0.20.5",
     "node-red-node-test-helper": "^0.2.2",
-    "should": "^13.2.3",
-    "snyk": "^1.161.1"
+    "should": "^13.2.3"
   },
   "scripts": {
-    "test": "snyk test && mocha \"test/**/*_spec.js\""
+    "test": "mocha \"test/**/*_spec.js\""
   }
 }
