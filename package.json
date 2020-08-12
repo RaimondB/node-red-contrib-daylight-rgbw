@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-daylight-rgbw",
-  "version": "1.4.2",
+  "version": "2.0.0-beta.1",
   "description": "Daylight RGBW Color control for Node RED",
   "author": "Raimond Brookman <raimondb@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "dependencies": {
     "bluebird": "^3.5.4",
     "color-temperature": "^0.2.7",
-    "color-convert": "^2.0.0",
+    "color-convert": "^2.0.1",
     "suncalc": "^1.8.0"
   },
   "keywords": [
@@ -31,9 +31,9 @@
   },
   "devDependencies": {
     "deep-extend": "^0.6.0",
-    "mocha": "^7.0.0",
+    "mocha": "^8.1.1",
     "node-red": "^1.0.6",
-    "node-red-node-test-helper": "^0.2.2",
+    "node-red-node-test-helper": "^0.2.5",
     "should": "^13.2.3"
   },
   "scripts": {
