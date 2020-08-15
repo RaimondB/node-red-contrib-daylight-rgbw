@@ -26,6 +26,8 @@ The typical setup is show below:
 
 Also see this link for an [importable version of the example](https://raw.githubusercontent.com/RaimondB/node-red-contrib-daylight-rgbw/master/examples/daylight-flow-basic.json).
 
+*Minimum Node version is now at 10.x*
+
 <p>
 This example follows the rules below:
 

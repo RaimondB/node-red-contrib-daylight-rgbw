@@ -1,13 +1,15 @@
 language: node_js
 
 node_js:
-  - "8"
   - "10"
+  - "12"
+  - "14"
+  - "lts/*"
 
 cache: npm
 
 before_install:
-  - npm install node-red@~0.20.5
+  - npm install node-red@^1.0.6
   
 notifications:
   slack: brookman:tFljPfoIDuqfPhYqYsCVRYXf
