@@ -55,7 +55,7 @@ stages:
   condition:  and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
   - job: Release
-    displayName: Build Docker & Release to NPM
+    displayName: Semantic Release to NPM
     pool:
       vmImage: ubuntu-latest
     steps:
