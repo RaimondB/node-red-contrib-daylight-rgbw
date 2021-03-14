@@ -49,4 +49,4 @@ npm-debug.log
 .vscode
 node_modules/
 
-./test-results.xml
+test-results.xml
