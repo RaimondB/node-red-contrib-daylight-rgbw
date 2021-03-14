@@ -1,0 +1,62 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pr:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+- repo: self
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    displayName: Build & Test
+    strategy:
+      matrix:
+        node_12_x:
+          node_version: 12.x
+        node_14_x:
+          node_version: 14.x
+    steps:
+    - task: NodeTool@0 
+      inputs:
+        versionSpec: $(node_version)
+    - script: |
+        npm install
+        npm test
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '**/TEST-RESULTS.xml'
+
+
+- stage: Release
+  displayName: Release a new version to NPM
+  condition:  and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - job: Release
+    displayName: Build Docker & Release to NPM
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Npm@1
+      inputs: # Ensure that the semantic-release tool is installed as specified in the package.json
+        command: 'install'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          npx semantic-release
+      env:
+        GH_TOKEN: $(GH_TOKEN)
+        NPM_TOKEN: $(NPM_TOKEN)
