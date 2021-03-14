@@ -35,12 +35,15 @@
     "node-red": "^1.0.6",
     "node-red-node-test-helper": "^0.2.5",
     "semantic-release": "^17.1.1",
-    "should": "^13.2.3"
+    "should": "^13.2.3",
+    "mocha-junit-reporter": "^2.0.0"
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""
   },
   "release": {
-    "branches": ["master"]
+    "branches": [
+      "master"
+    ]
   }
 }
