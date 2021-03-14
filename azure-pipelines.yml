@@ -42,7 +42,7 @@ stages:
         versionSpec: $(node_version)
     - script: |
         npm install
-        npm test
+        npm test -- --reporter mocha-junit-reporter
     - task: PublishTestResults@2
       condition: succeededOrFailed()
       inputs:
