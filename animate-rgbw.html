@@ -56,6 +56,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <dd> Number to set a desired brightness (white level).</dd>
             </dl>
         </li>
+        <li>
+            <dl class="message-properties">
+                <dt>payload (no special topic)
+                    <span class="property-type">string</span>
+                </dt>
+                <dd>Supports switch ON or OFF values for several home automation libraries, to either start or stop the animation</dd>
+            </dl>
+        </li>
     </ol>
 
     <h3>Outputs</h3>
@@ -93,6 +101,8 @@ This node offers the possibility to animate your ledstrip with different color a
 The typical setup is to:
 <p>
 <b> Have an external node to trigger the start of the animation.</b> 
+This node is optimized to work directly with OpenHab2, Homekit or HomeAssisant nodes. 
+It can work with any source node when a compatible payload is sent; e.g. "START" and "STOP", "ON" and "OFF".
 </p>
 <p>
 <b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>

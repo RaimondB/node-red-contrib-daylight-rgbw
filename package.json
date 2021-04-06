@@ -36,7 +36,9 @@
     "node-red-node-test-helper": "^0.2.5",
     "semantic-release": "^17.1.1",
     "should": "^13.2.3",
-    "mocha-junit-reporter": "^2.0.0"
+    "mocha-junit-reporter": "^2.0.0",
+    "bufferutil": "^4.0.3",
+    "utf-8-validate": "^5.0.4"
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""

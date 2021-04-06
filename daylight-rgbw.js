@@ -18,6 +18,7 @@ module.exports = function(RED) {
   
     var ct = require('color-temperature');
     var SunCalc = require('suncalc');
+    var ph = require('./payload-helpers');
     
     function ScaleRGBLevelToPercent(rgbLevel) {
         return rgbLevel * 100.0 / 255.0;
@@ -52,11 +53,12 @@ module.exports = function(RED) {
         this.log("Configured colorTempUnit:" + this.colorTempUnit );
 
         var node = this;
-  
+ 
         // This will be executed on every input message
         this.on('input', function (msg) {
         
             this.log("Received Topic:" + msg.topic);
+            var switchValue = ph.getSwitchValue(msg.payload);
 
             if(msg.topic == "date-time")
             {
@@ -75,11 +77,6 @@ module.exports = function(RED) {
             {
                 this.colorTemp = Number(msg.payload) * 1.0;
             }
-            else if(msg.topic == "item-switch" || msg.event == "StateEvent" )
-            {
-                this.itemState = msg.payload;
-                this.context().set("itemSate", this.itemState);
-            }
             else if(msg.topic == "white-level")
             {
                 var currentWhiteLevel = this.whiteLevel;
@@ -90,10 +87,11 @@ module.exports = function(RED) {
                     this.whiteLevel = newWhiteLevel;
                 }
             }
-            else
+            else if(switchValue)
             {
-                this.status({fill:"red",shape:"dot",text:"unknown topic:" + msg.topic});
-                return;
+                this.itemState = switchValue;
+                this.context().set("itemSate", this.itemState);
+                this.status({fill:"green",shape:"dot",text:`state:${this.itemState}`});
             }
 
             this.log("Color-temp:" + this.colorTemp);
@@ -102,9 +100,8 @@ module.exports = function(RED) {
 
             var colorTempOut = (this.colorTempUnit == "K") ? this.colorTemp : KelvinToMired(this.colorTemp);
 
-            if(this.itemState == "ON")
+            if(this.itemState == "on")
             {
-
                 var rgb = ct.colorTemperature2rgb(this.colorTemp);
         
                 // Convert values to percentage
@@ -125,7 +122,8 @@ module.exports = function(RED) {
                 ",G:" + green.toFixed(1) + ",B:" + blue.toFixed(1) +
                 ",W:" + white.toFixed(1) + ",colorTemp:" + colorTempOut.toFixed(1)});
             }
-            else
+            
+            if(this.itemState == "off")
             {
                 this.status({fill:"red",shape:"ring",text:"OFF, colortemp:" + colorTempOut.toFixed(1)});
             }

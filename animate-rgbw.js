@@ -18,6 +18,7 @@ module.exports = function(RED) {
   
     var ct = require('color-temperature');
     var convert = require('color-convert');
+    var ph = require('./payload-helpers');
     
     function ScaleRGBLevelToPercent(rgbLevel) {
         return rgbLevel * 100.0 / 255.0;
@@ -157,18 +158,21 @@ module.exports = function(RED) {
             }
             else
             {
-                if(msg.payload == "STOP")
+                var doAnimation = ph.getSwitchValue(msg.payload);
+
+                if(doAnimation == "off")
                 {
                     this.stopAnimating = true;
                 }
-                else
+                
+                if(doAnimation == "on")
                 {
                     this.stopAnimating = false;
                     if(this.colorSource)
                     {
                         setTimeout(() => outputValues(node, this.colorSource, null), 100);
                     }
-                }            
+                }
             }
         });
 

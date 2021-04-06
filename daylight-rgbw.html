@@ -65,10 +65,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         </li>
         <li>
             <dl class="message-properties">
-                <dt>payload (topic:item-switch)
+                <dt>payload (no special topic)
                     <span class="property-type">string</span>
                 </dt>
-                <dd> ON or OFF, to either enable sending output messages or not</dd>
+                <dd>Supports switch ON or OFF values for several home automation libraries, to either enable sending output messages or not</dd>
             </dl>
         </li>
         <li>
@@ -146,7 +146,8 @@ The typical setup is to:
 <b> Have your RGB(W) node status attached to the input to provide ON or OFF</b>
 <p>
     This way you prevent the light source to come on each time when the color are updated.
-    This node is optimized to work directly with OpenHab2 nodes, but will work with any node as long as the topic is set to item-switch.
+    This node is optimized to work directly with OpenHab2, Homekit or HomeAssisant nodes. 
+    It can work with any source node when a compatible payload is sent; e.g. "START" and "STOP", "ON" and "OFF".
 </p>
 <p>
 <b> Have your RGB(W) dimmer controls for the color channels connected to the outputs.</b>
