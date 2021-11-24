@@ -32,6 +32,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <label for="node-input-whiteLevel"><i class="fa fa-tasks"></i>White Level</label>
         <input type="text" id="node-input-whiteLevel" placeholder="White Level">
     </div>
+    <div class="form-row">
+        <label for="node-input-changeInterval"><i class="fa fa-tasks"></i>Change Interval</label>
+        <input type="text" id="node-input-changeInterval" placeholder="Change Interval">
+    </div>
 
 </script>
 
@@ -108,7 +112,8 @@ The typical setup is to:
             name: {value:""},
             topic: {value:"animate-rgbw", required:true},
             whiteLevel: {value:50, required:true, validate:RED.validators.number()},
-            animationType : {value:"C", required:true}
+            animationType : {value:"C", required:true},
+            changeInterval : {value:100, required:true, validate:RED.validators.number()}
         },
         inputs:1,               
         outputs:4,              
