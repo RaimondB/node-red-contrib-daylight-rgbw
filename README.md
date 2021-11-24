@@ -6,7 +6,7 @@ Makes your RGB(W) controllable lights or ledstrips follow the sun color and a wa
 
 [![NPM Version](https://img.shields.io/npm/v/node-red-contrib-daylight-rgbw)](https://www.npmjs.com/package/node-red-contrib-daylight-rgbw)
 [![NPM Download](https://img.shields.io/npm/dm/node-red-contrib-daylight-rgbw)](https://npmjs.org/package/node-red-contrib-daylight-rgbw)
-[![Build Status](https://travis-ci.com/RaimondB/node-red-contrib-daylight-rgbw.svg?branch=master)](https://travis-ci.com/RaimondB/node-red-contrib-daylight-rgbw)
+[![Build Status](https://dev.azure.com/raimondb74/Nodered-Daylight-RGBW/_apis/build/status/RaimondB.node-red-contrib-daylight-rgbw?branchName=master)](https://dev.azure.com/raimondb74/Nodered-Daylight-RGBW/_build/latest?definitionId=3&branchName=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/RaimondB/node-red-contrib-daylight-rgbw/badge.svg?targetFile=package.json)](https://snyk.io/test/github/RaimondB/node-red-contrib-daylight-rgbw?targetFile=package.json)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
