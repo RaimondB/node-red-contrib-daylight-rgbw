@@ -41,10 +41,5 @@
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""
-  },
-  "release": {
-    "branches": [
-      "master"
-    ]
   }
 }
