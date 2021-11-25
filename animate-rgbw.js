@@ -124,7 +124,7 @@ module.exports = function(RED) {
         this.topic = n.topic;
         this.command = n.command;
         this.whiteLevel = Number(n.whiteLevel);
-        this.changeInterval = Number(n.changeInterval);
+        this.changeInterval = Number(n.changeInterval) | 100;
 
         this.stopAnimating = true;
         this.log("Received Animationtype:" + n.animationType);
