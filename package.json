@@ -15,7 +15,7 @@
   "dependencies": {
     "bluebird": "^3.5.4",
     "color-temperature": "^0.2.7",
-    "color-convert": "^2.0.1",
+    "color-convert": "^3.0.0",
     "suncalc": "^1.8.0"
   },
   "keywords": [
