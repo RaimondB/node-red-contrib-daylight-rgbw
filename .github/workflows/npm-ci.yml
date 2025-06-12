@@ -9,7 +9,17 @@ on:
       - master
       
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js 20 for workflow
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: echo "Workflow running on Node.js 20"
+      
   build:
+    needs: setup
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x, 20.x]
@@ -23,8 +33,8 @@ jobs:
       - run: npm ci
       - run: npm test -- --reporter json --reporter-option output=test-results.json
       - name: Archive test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: test-results-report
+          name: test-results-report-${{ matrix.node-version }}
           path: test-results.json

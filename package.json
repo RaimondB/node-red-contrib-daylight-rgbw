@@ -35,7 +35,7 @@
     "node-red": "^4.0.0",
     "node-red-node-test-helper": "^0.3.0",
     "semantic-release": "^24.0.0",
-    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/exec": "^7.1.0",
     "should": "^13.2.3",
     "mocha-junit-reporter": "^2.0.0"
   },
