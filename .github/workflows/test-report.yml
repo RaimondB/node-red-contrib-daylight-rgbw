@@ -7,10 +7,13 @@ on:
 jobs:
   report:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x]
     steps:
     - uses: dorny/test-reporter@v1
       with:
-        artifact: test-results-report      # artifact name
-        name: Mocha Tests                  # Name of the check run which will be created
+        artifact: test-results-report-${{ matrix.node-version }}      # artifact name
+        name: Mocha Tests-${{ matrix.node-version }}                  # Name of the check run which will be created
         path: '*.json'                     # Path to test results (inside artifact .zip)
         reporter: mocha-json              # Format of test results
