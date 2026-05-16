@@ -26,6 +26,7 @@
     "rgbw"
   ],
   "node-red": {
+    "version": ">=3.0.0",
     "nodes": {
       "daylight-rgbw": "daylight-rgbw.js",
       "animate-rgbw": "animate-rgbw.js"
