@@ -13,10 +13,10 @@
   },
   "homepage": "https://github.com/RaimondB/node-red-contrib-daylight-rgbw#readme",
   "dependencies": {
-    "bluebird": "^3.5.4",
+    "bluebird": "^3.7.2",
     "color-temperature": "^0.2.7",
     "color-convert": "^2.0.1",
-    "suncalc": "^1.8.0"
+    "suncalc": "^1.9.0"
   },
   "keywords": [
     "node-red",
@@ -31,13 +31,14 @@
   },
   "devDependencies": {
     "deep-extend": "^0.6.0",
-    "mocha": "^11.0.1",
-    "node-red": "^4.0.0",
-    "node-red-node-test-helper": "^0.3.0",
-    "semantic-release": "^24.0.0",
+    "mocha": "^11.7.5",
+    "node-red": "^4.1.10",
+    "node-red-node-test-helper": "^0.3.6",
+    "npm": "^11.6.2",
+    "semantic-release": "^25.0.3",
     "@semantic-release/exec": "^7.1.0",
     "should": "^13.2.3",
-    "mocha-junit-reporter": "^2.0.0"
+    "mocha-junit-reporter": "^2.2.1"
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\""
