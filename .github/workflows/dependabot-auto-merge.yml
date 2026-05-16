@@ -1,6 +1,10 @@
-# Auto-merges Dependabot PRs for patch and minor updates once the
-# branch-protection required checks pass. Major version bumps are left
-# for manual review (a major can be a breaking/ESM-only change).
+# Auto-merges Dependabot PRs once branch-protection required checks pass:
+#  - any github-actions ecosystem update (trusted first-party actions;
+#    they are always tagged as major bumps, so a patch/minor gate would
+#    never let them through)
+#  - npm patch and minor updates
+# npm MAJOR bumps are left for manual review (a major can be a
+# breaking/ESM-only change, e.g. color-convert v3).
 
 name: Dependabot auto-merge
 
@@ -20,8 +24,9 @@ jobs:
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Enable auto-merge for patch and minor updates
+      - name: Enable auto-merge
         if: >-
+          steps.meta.outputs.package-ecosystem == 'github_actions' ||
           steps.meta.outputs.update-type == 'version-update:semver-patch' ||
           steps.meta.outputs.update-type == 'version-update:semver-minor'
         run: gh pr merge --auto --squash "$PR_URL"
