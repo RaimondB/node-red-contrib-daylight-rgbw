@@ -9,20 +9,22 @@ on:
 
 jobs:
   publish-npm:
-#    if: ${{github.GITHUB_REF == 'refs/heads/master'}}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # semantic-release: create releases and push tags
+      id-token: write        # npm trusted publisher: OIDC token for npm auth
+      issues: write          # @semantic-release/github: comment on resolved issues
+      pull-requests: write   # @semantic-release/github: comment on released PRs
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-# See below for current versions supported by Node-red
-# https://nodered.org/docs/faq/node-versions#installing-nodejs
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
+          # Node 24 bundles npm 11.x, required for native OIDC
+          # trusted-publisher support (npm >= 11.5.1)
+          node-version: 24
       - run: npm ci
       - run: npm test
       - run: npx semantic-release
         env:
-#          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
