@@ -27,7 +27,7 @@ jobs:
       - run: npm ci
       - run: npm test -- --reporter json --reporter-option output=test-results.json
       - name: Mocha Tests-${{ matrix.node-version }}
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v3
         if: success() || failure()
         with:
           name: Mocha Tests-${{ matrix.node-version }}
