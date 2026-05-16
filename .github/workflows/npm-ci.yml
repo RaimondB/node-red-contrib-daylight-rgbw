@@ -4,9 +4,6 @@
 name: NPM-CI
 
 on:
-  push:
-    branches-ignore:
-      - master
   pull_request:
     branches:
       - master
@@ -24,6 +21,7 @@ jobs:
   build:
     needs: setup
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18.x, 20.x, 22.x]
     runs-on: ubuntu-latest
