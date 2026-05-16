@@ -12,6 +12,14 @@ updates:
       include: "scope"
   reviewers:
   - raimondb
+  # Transitive deps bundled deep in dev tooling (mocha/node-red/
+  # semantic-release) that Dependabot cannot patch here, so its
+  # security-update jobs fail every run with update_not_possible.
+  # Ignore to stop the noise; npm audit still reports them.
+  ignore:
+  - dependency-name: "serialize-javascript"
+  - dependency-name: "picomatch"
+  - dependency-name: "ip-address"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
