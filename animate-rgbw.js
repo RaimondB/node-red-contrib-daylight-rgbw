@@ -17,8 +17,58 @@ module.exports = function(RED) {
     "use strict";
   
     var ct = require('color-temperature');
-    var convert = require('color-convert');
-    
+
+    // HSL -> RGB, returning a rounded integer [r,g,b] (0-255). This is a
+    // verbatim port of color-convert@2 conversions.js hsl.rgb plus the
+    // Math.round its index.js wrapper applies, so output is bit-identical.
+    // Inlined to avoid a dependency on color-convert (v3+ is ESM-only and
+    // cannot be require()'d by a CommonJS Node-RED node).
+    function hslToRgb(h, s, l) {
+        h = h / 360;
+        s = s / 100;
+        l = l / 100;
+
+        if (s === 0) {
+            var mono = Math.round(l * 255);
+            return [mono, mono, mono];
+        }
+
+        var t2;
+        if (l < 0.5) {
+            t2 = l * (1 + s);
+        } else {
+            t2 = l + s - l * s;
+        }
+
+        var t1 = 2 * l - t2;
+
+        var rgb = [0, 0, 0];
+        for (var i = 0; i < 3; i++) {
+            var t3 = h + 1 / 3 * -(i - 1);
+            if (t3 < 0) {
+                t3++;
+            }
+            if (t3 > 1) {
+                t3--;
+            }
+
+            var val;
+            if (6 * t3 < 1) {
+                val = t1 + (t2 - t1) * 6 * t3;
+            } else if (2 * t3 < 1) {
+                val = t2;
+            } else if (3 * t3 < 2) {
+                val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+            } else {
+                val = t1;
+            }
+
+            rgb[i] = Math.round(val * 255);
+        }
+
+        return rgb;
+    }
+
     function ScaleRGBLevelToPercent(rgbLevel) {
         return rgbLevel * 100.0 / 255.0;
     }
@@ -56,7 +106,7 @@ module.exports = function(RED) {
 
         var whiteLevel = Math.floor( transformer(Math.random()) * 80);
 
-        var result = convert.hsl.rgb(hue, saturation, luminance);
+        var result = hslToRgb(hue, saturation, luminance);
 
         var colorInfo = {};
         colorInfo.red = result[0];
@@ -86,7 +136,7 @@ module.exports = function(RED) {
         var luminance = previousColorInfo.state.lum;
         var whiteLevel = 0;
 
-        var result = convert.hsl.rgb(hue, saturation, luminance);
+        var result = hslToRgb(hue, saturation, luminance);
 
         var colorInfo = {};
         colorInfo.red = result[0];
