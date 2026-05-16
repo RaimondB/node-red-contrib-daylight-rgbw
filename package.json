@@ -15,8 +15,10 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "color-temperature": "^0.2.7",
-    "color-convert": "^2.0.1",
     "suncalc": "^1.9.0"
+  },
+  "engines": {
+    "node": ">=18.5"
   },
   "keywords": [
     "node-red",
