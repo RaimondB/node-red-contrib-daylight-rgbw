@@ -16,7 +16,7 @@ jobs:
       issues: write          # @semantic-release/github: comment on resolved issues
       pull-requests: write   # @semantic-release/github: comment on released PRs
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           # Node 24 bundles npm 11.x, required for native OIDC
