@@ -37,7 +37,7 @@
     "mocha": "^11.7.5",
     "node-red": "^4.1.10",
     "node-red-node-test-helper": "^0.3.6",
-    "npm": "^11.6.2",
+    "npm": "^12.0.0",
     "semantic-release": "^25.0.3",
     "@semantic-release/exec": "^7.1.0",
     "should": "^13.2.3",
